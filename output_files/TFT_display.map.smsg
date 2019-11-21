@@ -1,0 +1,2 @@
+Warning (10268): Verilog HDL information at TFT_driver.v(63): always construct contains both blocking and non-blocking assignments File: F:/FPGA/Code/DE1-SoC/Peripheral/TFT_display/TFT_driver.v Line: 63
+Warning (10268): Verilog HDL information at TFT_driver.v(75): always construct contains both blocking and non-blocking assignments File: F:/FPGA/Code/DE1-SoC/Peripheral/TFT_display/TFT_driver.v Line: 75

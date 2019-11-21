@@ -1,0 +1,45 @@
+module TFT_display_top(
+	input					clk_50m,
+	input					rst_n,
+	
+	output	[15:0]	TFT_RGB,
+	output				TFT_VS,
+	output				TFT_HS,
+	output				TFT_CLK,
+	output				TFT_DE,
+	output				TFT_PWM
+);
+
+wire				clk_9m;
+wire	[9:0]		hcount_r;
+wire	[9:0]		vcount_r;
+wire	[15:0]	data;
+
+pll pll_inst(
+	.refclk   (clk_50m),   
+	.rst      (~rst_n),      
+	.outclk_0 (clk_9m), 
+	.locked   (locked) 
+);
+
+TFT_image u0(
+	.hcount_r(hcount_r),
+	.vcount_r(vcount_r),
+	.display_data(data)
+);
+
+TFT_driver u1(
+	.clk_9m(clk_9m),
+	.rst_n(rst_n),
+	.data_in(data),
+	.hcount(hcount_r),
+	.vcount(vcount_r,
+	.TFT_RGB(TFT_RGB),
+	.TFT_HS(TFT_HS),
+	.TFT_VS(TFT_VS),
+	.TFT_CLK(TFT_CLK),
+	.TFT_DE(TFT_DE),
+	.TFT_PWM(TFT_PWM)
+)
+
+endmodule

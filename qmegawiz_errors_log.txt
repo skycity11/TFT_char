@@ -1,0 +1,26 @@
+
+
+F:/FPGA/Code/DE1-SoC/Peripheral/TFT_display/pll.v
+
+Oct 30 10AM:41:34>: Megafunction PLL Intel FPGA IP v18.1 is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+F:/FPGA/Code/DE1-SoC/Peripheral/TFT_display/pll.v
+
+Oct 30 10AM:41:58>: Megafunction PLL Intel FPGA IP v18.1 is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+F:/FPGA/Code/DE1-SoC/Peripheral/TFT_display/pll.v
+
+Oct 30 10AM:42:25>: Megafunction PLL Intel FPGA IP v18.1 is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+F:/FPGA/Code/DE1-SoC/Peripheral/TFT_display/pll.v
+
+Oct 30 10AM:42:27>: Megafunction PLL Intel FPGA IP v18.1 is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted
+
+F:/FPGA/Code/DE1-SoC/Peripheral/TFT_display/pll.v
+
+Oct 30 10AM:42:31>: Megafunction PLL Intel FPGA IP v18.1 is not listed in any 
+wizard.lst file in the specified library path(s).Wizard launch aborted

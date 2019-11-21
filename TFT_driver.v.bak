@@ -1,0 +1,68 @@
+module TFT_driver(
+	input						clk_9m,
+	input						rst_n,
+	
+	input			[15:0]	data_in,
+	
+	output		[9:0]		hcount,
+	output		[9:0]		vcount,
+	output		[15:0]	TFT_RGB,
+	output					TFT_HS,
+	output					TFT_VS,
+	output					TFT_CLK,
+	output					TFT_DE,
+	output					TFT_PWM
+);
+parameter	TFT_HS_end = 10'd40,
+				hdat_begin = 10'd42,
+				hdat_end = 10'd522,
+				hpixel_end = 10'd524,
+				TFT_VS_end = 10'9,
+				vdat_begin = 10'd11,
+				vdat_end = 10'd283,
+				vline_end = 10'd285;
+
+//hcount_r
+always @(posedge clk_9m or negedge rst_n) begin
+	if(!rst_n)
+		hcount_r = 10'd0;
+	else
+		if(hcount_r == hpixel_end)
+			hcount_r <= 10'd0;
+		else
+			hcount_r <= hcount_r + 1'b1;
+end
+
+//vcount_r
+always @(posedge clk_9m or negedge rst_n) begin
+	if(!rst_n)
+		vcount_r = 10'd0;
+	else if(hcount_r == hpixel_end)
+		if(vcount_r == vline_end)
+			vcount_r <= 10'd0;
+		else
+			vcount_r <= vcount_r + 1'b1;
+	else
+		vcount_r <= vcount_r;
+end
+
+//HS & VS
+assign TFT_HS = (hcount <= TFT_HS_end) ? 1'b0 : 1'b1;
+assign TFT_VS = (vcount <= TFT_VS_end) ? 1'b0 : 1'b1;
+
+//data
+reg		dat_act;
+assign dat_act = (hcount >= hdat_begin) && (hcount <= hdat_end)
+				  && (vcount >= vdat_begin) && (vcount <= vdat_end);
+TFT_RGB = (dat_act) ? data_in : 16'd0;
+
+//hcount & vcount
+assign hcount = hcount_r - hdat_begin;
+assign vcount = vcount_r - vdat_begin;
+
+//other Pins
+assign TFT_CLK = clk_9m;
+assign TFT_DE = dat_act;
+assign TFT_PWM = dat_act;
+
+endmodule

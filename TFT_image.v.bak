@@ -1,0 +1,61 @@
+module TFT_image(
+	input		[9:0]		hcount_r,
+	input		[9:0]		vcount_r,
+	
+	output	[15:0]	display_data
+);
+
+localparam	BLACK = 16'h0000,		//黑色
+				BLUE = 16'h001f,		//蓝色
+				RED = 16'hf800,		//红色
+				PURPPLE = 16'hf81f,	//紫色
+				GREEN	= 16'h07e0,		//绿色
+				CYAN = 16'h07ff,		//青色
+				YELLOW = 16'hffe0,	//黄色
+				WHITE = 16'hffff;		//白色
+//Rx_Cy
+wire		[15:0]	R0_C0 = RED;
+wire		[15:0]	R0_C1 = YELLOW;
+wire		[15:0]	R1_C0 = GREEN;
+wire		[15:0]	R1_C1 = CYAN;
+wire		[15:0]	R2_C0 = BLUE;
+wire		[15:0]	R2_C1 = PURPPLE;
+wire		[15:0]	R3_C0 = BLACK;
+wire		[15:0]	R3_C1 = WHITE;
+
+//Rx_act & Cy_act
+wire		C0_act = (hcount >= 10'd0) 	&& (hcount < 10'd240);
+wire		C1_act = (hcount >= 10'd240) 	&& (hcount < 10'd480);
+wire		R0_act = (vcount >= 10'd0)		&& (vcount < 10'd68);
+wire		R1_act = (vcount >= 10'd68)	&& (vcount < 10'd136);
+wire		R2_act = (vcount >= 10'd136)	&& (vcount < 10'd204);
+wire		R3_act = (vcount >= 10'd204)	&& (vcount < 10'd272);
+
+//Rx_Cy_act
+wire		R0_C0_act = R0_act && C0_act;
+wire		R0_C1_act = R0_act && C1_act;
+wire		R1_C0_act = R1_act && C0_act;
+wire		R1_C1_act = R1_act && C1_act;
+wire		R2_C0_act = R2_act && C0_act;
+wire		R2_C1_act = R2_act && C1_act;
+wire		R3_C0_act = R3_act && C0_act;
+wire		R3_C1_act = R3_act && C1_act;
+
+//disp_data
+reg		[15:0]	data_r;
+assign	display_data = data_r;
+always @(*) begin
+	case ({R3_C1_act , R3_C0_act , R2_C1_act , R2_C0_act ,
+			 R1_C1_act , R1_C0_act , R0_C1_act , R0_C0_act})
+		8'b0000_0001 : data_r = R0_C0;
+		8'b0000_0010 : data_r = R0_C1;
+		8'b0000_0100 : data_r = R1_C0;
+		8'b0000_1000 : data_r = R1_C1;
+		8'b0001_0000 : data_r = R2_C0;
+		8'b0010_0001 : data_r = R2_C1;
+		8'b0100_0001 : data_r = R3_C0;
+		8'b1000_0001 : data_r = R3_C1;
+	endcase
+end
+
+endmodule
